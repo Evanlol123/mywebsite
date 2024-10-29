@@ -7,7 +7,7 @@
 
 * {
     box-sizing: border-box;
-    font-family: "Nunito", Sans-serif;
+    font-family: "Fredoka", Sans-serif;
 }
 
 body {
@@ -54,6 +54,8 @@ body.loaded .slide-in {
 .social-link {
     transition: transform 0.3s ease;
     display: inline-block;
+    float: right;
+    padding:3px;
 }
 
 .social-link:hover {
