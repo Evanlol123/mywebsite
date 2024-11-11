@@ -1,0 +1,18 @@
+(bullseye)survivor@localhost:~$ neofetch
+       _,met$$$$$gg.          survivor@localhost 
+    ,g$$$$$$$$$$$$$$$P.       ------------------ 
+  ,g$$P"     """Y$$.".        OS: Debian GNU/Linux 11 (bullseye) on Chrome OS x86_64 
+ ,$$P'              `$$$.     Host: Bobba rev4 
+',$$P       ,ggs.     `$$b:   Kernel: 4.14.254-19559-g6b2d2582e96e 
+`d$$'     ,$P"'   .    $$$    Uptime: 22 hours, 48 mins 
+ $$P      d$'     ,    $$P    Packages: 1073 (dpkg) 
+ $$:      $$.   -    ,d$$'    Shell: bash 5.1.4 
+ $$;      Y$b._   _,d$P'      Resolution: 1600x900 
+ Y$$.    `.`"Y$$$$P"'         Terminal: enter-chroot 
+ `$$b      "-.__              CPU: Intel Celeron N4020 (2) @ 2.800GHz 
+  `Y$$                        Memory: 2988MiB / 3806MiB 
+   `Y$$.
+     `$$b.                                            
+       `Y$$b.                                         
+          `"Y$b._
+              `"""
