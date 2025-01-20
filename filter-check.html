@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>URL Opener for Filter Status</title>
+</head>
+<body>
+  <h1>URL Opener for Filter Status</h1>
+  <p>Upload a .txt file with one URL per line. The script will open each URL in a new tab to check the filter status.</p>
+
+  <input type="file" id="fileInput" accept=".txt">
+  <button id="processButton">Open URLs</button>
+
+  <script>
+    document.getElementById('processButton').addEventListener('click', () => {
+      const fileInput = document.getElementById('fileInput');
+
+      if (!fileInput.files.length) {
+        alert('Please upload a file first.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        const urls = event.target.result.split('\n').map(url => url.trim()).filter(Boolean);
+
+        if (urls.length === 0) {
+          alert('No valid URLs found in the file.');
+          return;
+        }
+        urls.forEach(url => {
+          const formattedUrl = url.replace(/^https?:\/\//, ''); // Remove https://
+          const checkerUrl = `https://filterchecker.psr.tf/check/${formattedUrl}/results.txt`;
+          window.open(checkerUrl, '_blank');
+        });
+      };
+
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>
