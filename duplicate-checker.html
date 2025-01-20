@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Duplicate Link Remover</title>
+</head>
+<body>
+  <h1>Duplicate Link Remover</h1>
+  <p>Upload a text file with one link per line. The page will remove duplicates and let you download a cleaned file.</p>
+
+  <input type="file" id="fileInput" accept=".txt">
+  <button id="processButton">Process File</button>
+
+  <a id="downloadLink" style="display: none;">Download Cleaned File</a>
+
+  <script>
+    document.getElementById('processButton').addEventListener('click', () => {
+      const fileInput = document.getElementById('fileInput');
+      if (!fileInput.files.length) {
+        alert('Please upload a file first.');
+        return;
+      }
+
+      const file = fileInput.files[0];
+      const reader = new FileReader();
+
+      reader.onload = function(event) {
+        const content = event.target.result;
+
+        const lines = content.split('\n').map(line => line.trim());
+
+        const uniqueLines = [...new Set(lines)];
+
+        const cleanedContent = uniqueLines.join('\n');
+
+        const blob = new Blob([cleanedContent], { type: 'text/plain' });
+        const url = URL.createObjectURL(blob);
+
+        const downloadLink = document.getElementById('downloadLink');
+        downloadLink.href = url;
+        downloadLink.download = 'cleaned_links.txt';
+        downloadLink.textContent = 'Download Cleaned File';
+        downloadLink.style.display = 'inline-block';
+      };
+
+      reader.readAsText(file);
+    });
+  </script>
+</body>
+</html>
