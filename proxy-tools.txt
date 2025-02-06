@@ -1,0 +1,6 @@
+https://github.com/hagezi/dns-blocklists/issues
+https://2ip.io/domain-list-by-ip/159.54.169.0
+https://archive.lightspeedsystems.com
+https://iamsurvivor.vercel.app/filter-check.html
+https://filterchecker.psr.tf/check/discord.com/results.txt
+https://iamsurvivor.vercel.app/duplicate-checker.html
