@@ -4,3 +4,4 @@ https://archive.lightspeedsystems.com
 https://iamsurvivor.vercel.app/filter-check.html
 https://filterchecker.psr.tf/check/discord.com/results.txt
 https://iamsurvivor.vercel.app/duplicate-checker.html
+https://docs.google.com/document/d/1je8nZWH9Y20hiD0KKs3iE1tjuN19aa9uRAi3MCNH98s/edit?usp=sharing
