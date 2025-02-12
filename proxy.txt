@@ -433,3 +433,9 @@ https://n.goguardian.host
 https://s1.goguardian.host
 https://space.goguardian.host
 https://www-www.goguardian.host
+https://finally.a-working-site.ostrovsky.sk
+https://edu.moldeo.org
+https://history-of-helen-keller.moldeo.org
+https://history-of-thomas-jefferson.moldeo.org
+https://thickofit.moldeo.org
+https://wfwefewefwefeewefw.moldeo.org
