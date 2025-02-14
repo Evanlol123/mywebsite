@@ -7,38 +7,32 @@
 </head>
 <body>
   <h1>URL Opener for Filter Status</h1>
-  <p>Upload a .txt file with one URL per line. The script will open each URL in a new tab to check the filter status.</p>
+  <p>Type in the URLs, one per line. The script will open each URL in a new tab to check the filter status.</p>
 
-  <input type="file" id="fileInput" accept=".txt">
+  <textarea id="urlInput" rows="10" cols="50" placeholder="Enter URLs, one per line"></textarea><br>
   <button id="processButton">Open URLs</button>
 
   <script>
     document.getElementById('processButton').addEventListener('click', () => {
-      const fileInput = document.getElementById('fileInput');
-
-      if (!fileInput.files.length) {
-        alert('Please upload a file first.');
+      const urlInput = document.getElementById('urlInput').value.trim();
+      
+      if (!urlInput) {
+        alert('Please enter some URLs.');
         return;
       }
 
-      const file = fileInput.files[0];
-      const reader = new FileReader();
+      const urls = urlInput.split('\n').map(url => url.trim()).filter(Boolean);
 
-      reader.onload = function (event) {
-        const urls = event.target.result.split('\n').map(url => url.trim()).filter(Boolean);
+      if (urls.length === 0) {
+        alert('No valid URLs found.');
+        return;
+      }
 
-        if (urls.length === 0) {
-          alert('No valid URLs found in the file.');
-          return;
-        }
-        urls.forEach(url => {
-          const formattedUrl = url.replace(/^https?:\/\//, ''); // Remove https://
-          const checkerUrl = `https://filterchecker.psr.tf/check/${formattedUrl}/results.txt`;
-          window.open(checkerUrl, '_blank');
-        });
-      };
-
-      reader.readAsText(file);
+      urls.forEach(url => {
+        const formattedUrl = url.replace(/^https?:\/\//, ''); // Remove https://
+        const checkerUrl = `https://filterchecker.psr.tf/check/${formattedUrl}/results.txt`;
+        window.open(checkerUrl, '_blank');
+      });
     });
   </script>
 </body>
