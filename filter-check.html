@@ -29,7 +29,8 @@
       }
 
       urls.forEach(url => {
-        const formattedUrl = url.replace(/^https?:\/\//, ''); // Remove https://
+        // Remove https:// or http:// if present, and remove trailing slash
+        let formattedUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
         const checkerUrl = `https://filterchecker.psr.tf/check/${formattedUrl}/results.txt`;
         window.open(checkerUrl, '_blank');
       });
