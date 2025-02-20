@@ -21,7 +21,9 @@
         return;
       }
 
-      const urls = urlInput.split('\n').map(url => url.trim()).filter(Boolean);
+      const urls = urlInput.split('\n')
+        .map(url => url.trim().replace(/^https?:\/\//, '').replace(/\/$/, '')) // Remove http(s):// and trailing slash
+        .filter(Boolean);
 
       if (urls.length === 0) {
         alert('No valid URLs found.');
@@ -29,9 +31,7 @@
       }
 
       urls.forEach(url => {
-        // Remove https:// or http:// if present, and remove trailing slash
-        let formattedUrl = url.replace(/^https?:\/\//, '').replace(/\/$/, '');
-        const checkerUrl = `https://filterchecker.psr.tf/check/${formattedUrl}/results.txt`;
+        const checkerUrl = `https://filterchecker.psr.tf/check/${url}/results.txt`;
         window.open(checkerUrl, '_blank');
       });
     });
