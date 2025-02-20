@@ -18,7 +18,19 @@
   <button id="processButton">Open URLs</button>
 
   <script>
-    document.getElementById('processButton').addEventListener('click', () => {
+    async function fetchProxyList() {
+      try {
+        const response = await fetch('/proxy.txt');
+        if (!response.ok) throw new Error('Failed to load proxy list.');
+        const text = await response.text();
+        return text.split('\n').map(url => url.trim().replace(/^https?:\/\//, '').replace(/\/$/, '')).filter(Boolean);
+      } catch (error) {
+        console.error(error);
+        return [];
+      }
+    }
+
+    document.getElementById('processButton').addEventListener('click', async () => {
       const urlInput = document.getElementById('urlInput').value.trim();
       const excludeInput = document.getElementById('excludeInput').value.trim();
 
@@ -28,20 +40,18 @@
       }
 
       const urls = urlInput.split('\n')
-        .map(url => url.trim().replace(/^https?:\/\//, '').replace(/\/$/, '')) // Remove http(s):// and trailing slash
+        .map(url => url.trim().replace(/^https?:\/\//, '').replace(/\/$/, ''))
         .filter(Boolean);
 
       const excludeList = excludeInput.split('\n')
         .map(url => url.trim().replace(/^https?:\/\//, '').replace(/\/$/, ''))
         .filter(Boolean);
 
-      if (urls.length === 0) {
-        alert('No valid URLs found.');
-        return;
-      }
+      const proxyList = await fetchProxyList();
 
       const isExcluded = (url) => {
-        return excludeList.some(excluded => url === excluded || url.endsWith(`.${excluded}`));
+        return excludeList.some(excluded => url === excluded || url.endsWith(`.${excluded}`)) ||
+               proxyList.includes(url);
       };
 
       urls.forEach(url => {
