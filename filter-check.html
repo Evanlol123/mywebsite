@@ -15,13 +15,23 @@
   <p>Type in domains to exclude. If a URL is a subdomain of or contains an excluded domain, it won't be opened.</p>
   <textarea id="excludeInput" rows="5" cols="50" placeholder="Enter domains to exclude, one per line"></textarea><br>
 
+  <label>
+    <input type="checkbox" id="proxyCheck">
+    Exclude URLs listed in <code>/proxy.txt</code>
+  </label><br>
+
+  <label>
+    <input type="checkbox" id="subdomainCheck">
+    Exclude subdomains listed in <code>/subdomains.txt</code>
+  </label><br><br>
+
   <button id="processButton">Open URLs</button>
 
   <script>
-    async function fetchProxyList() {
+    async function fetchList(filePath) {
       try {
-        const response = await fetch('/proxy.txt');
-        if (!response.ok) throw new Error('Failed to load proxy list.');
+        const response = await fetch(filePath);
+        if (!response.ok) throw new Error(`Failed to load ${filePath}.`);
         const text = await response.text();
         return text.split('\n').map(url => url.trim().replace(/^https?:\/\//, '').replace(/\/$/, '')).filter(Boolean);
       } catch (error) {
@@ -33,6 +43,8 @@
     document.getElementById('processButton').addEventListener('click', async () => {
       const urlInput = document.getElementById('urlInput').value.trim();
       const excludeInput = document.getElementById('excludeInput').value.trim();
+      const proxyCheckEnabled = document.getElementById('proxyCheck').checked;
+      const subdomainCheckEnabled = document.getElementById('subdomainCheck').checked;
 
       if (!urlInput) {
         alert('Please enter some URLs.');
@@ -47,11 +59,22 @@
         .map(url => url.trim().replace(/^https?:\/\//, '').replace(/\/$/, ''))
         .filter(Boolean);
 
-      const proxyList = await fetchProxyList();
+      let proxyList = [], subdomainList = [];
+
+      if (proxyCheckEnabled) {
+        proxyList = await fetchList('/proxy.txt');
+      }
+
+      if (subdomainCheckEnabled) {
+        subdomainList = await fetchList('/subdomains.txt');
+      }
 
       const isExcluded = (url) => {
-        return excludeList.some(excluded => url === excluded || url.endsWith(`.${excluded}`)) ||
-               proxyList.includes(url);
+        return (
+          excludeList.some(excluded => url === excluded || url.endsWith(`.${excluded}`)) ||
+          (proxyCheckEnabled && proxyList.includes(url)) ||
+          (subdomainCheckEnabled && subdomainList.some(domain => url.endsWith(`.${domain}`)))
+        );
       };
 
       urls.forEach(url => {
